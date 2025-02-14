@@ -1,0 +1,4 @@
+sd_model_checkpoint;sampler_name;cfg_scale;steps;batch_size;seed;width;height;width_itog;height_itog;dir_name
+epicrealism_pureEvolutionV3;Euler a;7;20;4;-1;512;512;2048;2048;food_01
+Vibrant salad bowl filled with leafy greens, tomatoes, cucumbers, onions, and a tangy vinaigrette dressing, placed on a picnic blanket outdoors, natural lighting, High resolution;ugly, deformed, noisy, low poly, blurry, painting;;;;;;;;;
+analog film photo. faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage;painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured;;;;;;;;;

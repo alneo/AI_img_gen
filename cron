@@ -1,0 +1,8 @@
+#     ,------ MINUTE
+#    / ,----- HOUR
+#   / / ,---- DAY OF MONTH
+#  / / / ,--- MONTH
+# / / / / ,-- DAY OF WEEK
+#/ / / / /
+*/5 * * * *  /usr/local/bin/php /var/www/html/cron.php jobs_prompt >> /var/log/cron/cron.log
+#
