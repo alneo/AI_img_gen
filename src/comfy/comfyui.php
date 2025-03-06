@@ -12,7 +12,13 @@ if($step == 'job_create') {//Создание задачи
     $file_json = 'jsons/gen_flux_01.json';
     $prompt_array = json_decode(file_get_contents($file_json), 1);
 //$prompt_array[15]['inputs']['filename_prefix'] = 'one/ComfyUI';
-    $prompt = 'Sexy Woman in a formal suit with frills, a transparent shirt and see-through pants against the background of a school board';
+    $prompt = 'dark haired woman relaxing on a sofa, natural features, blue shirt --ar 3:4';
+    $prompt = 'a woman walking under trees with pink petals, dressed in a spring floral dress, hair in a messy braid, smiling, authentic look, --ar 3:4';
+    $prompt = 'a close up portrait of a man on a rural road in the southwest, mountains in the distance, dark hair, average man aged 35';
+    $prompt = 'Realistic photo portrait of a man at home, close up shot, concerned gaze, --ar 3:4';
+    $prompt = 'Soft lighting photograph, portrait, woman in a field, afternoon, --ar 3:4 --stylize 0';
+    $prompt = 'a street portrait of a man, wearing a jean jacket, chin length hair, bright green eyes, --ar 3:4 --stylize 200';
+    $prompt = 'Shallow depth of field, woman and a man sitting together in a park on a bench, facing the camera, portrait view --ar 6:5';
     $md5_prompt = substr(md5($prompt), 0, 16);
     $params['json'] = $prompt_array;
     $params['field'] = 'CLIPTextEncode';
@@ -91,8 +97,28 @@ if($step == 'job_check'){
     $post = array();
     $rez = cCurl($post,'/api/queue');
     $out = json_decode($rez['out'],1);
-    echo '<pre>'.print_r($out,1).'</pre>';
-    echo '<pre>'.print_r($rez,1).'</pre>';
+    if(count($out['queue_running'])) {
+        echo 'Выполняются:<br>';
+        foreach ($out['queue_running'] as $id => $v) {
+            if ($v[3]['client_id'] == $client_id) {
+                echo $v[1] . '<br>';
+            }
+        }
+    }else{
+        echo 'Нет выполняющихся:<br>';
+    }
+    if(count($out['queue_pending'])) {
+        echo 'В очереди:<br>';
+        foreach ($out['queue_pending'] as $id => $v) {
+            if ($v[3]['client_id'] == $client_id) {
+                echo $v[1] . '<br>';
+            }
+        }
+    }else{
+        echo 'Нет в очереди:<br>';
+    }
+    //echo '<pre>'.print_r($out,1).'</pre>';
+    //echo '<pre>'.print_r($rez,1).'</pre>';
 
     //$out=Array(
     //    [queue_running] => Array( выполняются
