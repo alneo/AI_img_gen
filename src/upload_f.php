@@ -23,6 +23,7 @@ if( isset( $_POST['csv_file_upload'] ) ){
     foreach ($done_files as $k => $file){//Обработаем файл
         $filenamej = pathinfo($file, PATHINFO_FILENAME);
         $csvData = getDataFromCSV($file);
+        //echo '<pre>'.print_r($csvData,1).'</pre>';
         $datas = array();
         if(isset($_POST['start'])) $datas['run'] = (int)$_POST['start'];
         $datas['status'] = 0;
@@ -38,11 +39,15 @@ if( isset( $_POST['csv_file_upload'] ) ){
                 }
             }
             if($k>1){//Получим промпты
-                $datas['prompts'][] = array('prompt_suc'=>$row[0],'prompt_neg'=>$row[1]);
+                $datas['prompts'][] = array('prompt_suc'=>utf8_encode($row[0]),'prompt_neg'=>utf8_encode($row[1]));
             }
         }
+        //echo '<pre>'.print_r($datas,1).'</pre>';
+//        echo json_encode($datas,JSON_UNESCAPED_UNICODE);
+//        var_dump(json_last_error_msg());
+//        echo '<pre>'.print_r($datas,1).'</pre>';exit();
         file_put_contents($jobsdir.'/'.$filenamej.'.json',json_encode($datas,JSON_UNESCAPED_UNICODE));
-        unlink($file);
+        //unlink($file);
     }
     die( json_encode( $data ) );
 }
@@ -51,7 +56,7 @@ function getDataFromCSV($file, $delimiter = ';', $enclosure = '"') {
     $data = array();
     if (($handle = fopen($file, "r")) !== FALSE) {
         while (($row = fgetcsv($handle, 0, $delimiter, $enclosure)) !== FALSE) {
-            $data[] = $row;
+            if($row[0]!='') $data[] = $row;
         }
         fclose($handle);
     }

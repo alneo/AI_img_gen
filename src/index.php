@@ -472,6 +472,7 @@ function HTML(){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
   <body>
     <div class="container text-center">
@@ -542,6 +543,7 @@ function HTML(){
                 <div class="send_ready" ><input type="submit" id="send" name="send" class="btn btn-success"></div>
                 <div class="send_work" style="display:none;">работаем...</div>
                 <div class="send_error" style="display:none;"></div>
+                '.HTML_FOLDER().'
             </div>
         </div>
         </form>
@@ -620,10 +622,38 @@ function HTML(){
             $("#prompt_neg").val( text_cur +" "+ prompt_neg);
         }
     });
+    $(".folder_des").click(function(){
+        let des = $(this).data("des");
+        let sel_folders = $("#sel_folders option:selected").val();
+        if(des == "del"){}
+        if(des == "view"){
+            
+        }
+        if(des == "download"){}
+        return false;
+    });
     var tooltipTriggerList = [].slice.call(document.querySelectorAll("[data-bs-toggle=\"tooltip\"]"))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) { return new bootstrap.Tooltip(tooltipTriggerEl) });
     })</script>
   </body>
 </html>';
+    return $out;
+}
+
+function HTML_FOLDER(){
+    $out = '<div class="row">';
+        $out .= '<div class="col-9">';
+            $out .= '<select class="form-select" id="sel_folders">';
+            $folders = get_photos_dir();
+            foreach ($folders as $folder){
+                $folder = str_replace('photos/','',$folder);
+                $out .= '<option value="'.$folder.'">'.$folder.'</option>';
+            }
+            $out .= '</select>';
+        $out .= '</div>';
+        $out .= '<div class="col-1"><a href="#" class="btn btn-sm btn-danger folder_des" data-des="del" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить директорию вместе с фото"><i class="bi bi-trash"></i></a></div>';
+        $out .= '<div class="col-1"><a href="#" class="btn btn-sm btn-info folder_des" data-des="view" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Посмотреть директорию!"><i class="bi bi-eye"></i></a></div>';
+        $out .= '<div class="col-1"><a href="#" class="btn btn-sm btn-warning folder_des" data-des="download" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Получить архив директории с фотками!"><i class="bi bi-box-arrow-down"></i></a></div>';
+    $out .= '</div>';
     return $out;
 }
